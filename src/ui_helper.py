@@ -15,7 +15,7 @@ def toggle_button(state, button):
 
 
 class UIMain(Ui_MainWindow):
-    data = []
+    data = {}
 
     def __init__(self, MainWindow):
         super().setupUi(MainWindow)
@@ -61,7 +61,9 @@ class UIMain(Ui_MainWindow):
         dialog.show()
         dialog.exec_()
 
-        self.data.append(dl.get_data())
+        new_data: dict = dl.get_data()
+        for key, val in new_data.items():
+            self.data[key] = val
 
     def __open_output_dialog(self, data):
         dialog = QDialog()

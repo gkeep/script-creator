@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'outputWindowQxkttz.ui'
+## Form generated from reading UI file 'outputWindowmzbdoA.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.8
 ##
@@ -29,6 +29,7 @@ class Ui_outDialog(object):
         font = QFont()
         font.setFamily(u"Ubuntu Mono")
         self.outputTextEdit.setFont(font)
+        self.outputTextEdit.setReadOnly(True)
 
         self.verticalLayout.addWidget(self.outputTextEdit)
 
