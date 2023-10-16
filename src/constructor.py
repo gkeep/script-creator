@@ -40,9 +40,9 @@ ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE d
 ekd_metadata="ekd_metadata"
 """
 
-    command = '$docker_pfx psql --dbname ${} -c "{}"'
+    command = '$docker_pfx psql --dbname ${} -c "{}"\n'
 
-    def make_script(self, sql_scripts: dict) -> str:
+    def make_script(self, sql_scripts: list) -> str:
         """
             tables: используемые таблицы в скрипте
             sql_scripts: словарь таблицы и скрипта к ней, например:
@@ -50,32 +50,33 @@ ekd_metadata="ekd_metadata"
         """
         out = self.head
 
-        tables = sql_scripts.keys()
+        for val in sql_scripts:
+            tables = val.keys()
 
-        # WARNING: ниже говнокод, но я хз как сделать подругому
-        if "ekd_ca" in tables:
-            out += self.ekd_ca_table
-        if "ekd_ekd" in tables:
-            out += self.ekd_ekd_table
-        if "ekd_id" in tables:
-            out += self.ekd_id_table
-        if "ekd_file" in tables:
-            out += self.ekd_file_table
-        if "ekd_file_processing" in tables:
-            out += self.ekd_file_processing_table
-        if "ekd_ftp_uploader" in tables:
-            out += self.ekd_ftp_uploader_table
-        if "ekd_notification" in tables:
-            out += self.ekd_notification_table
-        if "ekd_request_logger" in tables:
-            out += self.ekd_request_logger_table
-        if "ekd_session" in tables:
-            out += self.ekd_session_table
-        if "ekd_metadata" in tables:
-            out += self.ekd_metadata_table
+            # WARNING: ниже говнокод, но я хз как сделать подругому
+            if "ekd_ca" in tables:
+                out += self.ekd_ca_table
+            if "ekd_ekd" in tables:
+                out += self.ekd_ekd_table
+            if "ekd_id" in tables:
+                out += self.ekd_id_table
+            if "ekd_file" in tables:
+                out += self.ekd_file_table
+            if "ekd_file_processing" in tables:
+                out += self.ekd_file_processing_table
+            if "ekd_ftp_uploader" in tables:
+                out += self.ekd_ftp_uploader_table
+            if "ekd_notification" in tables:
+                out += self.ekd_notification_table
+            if "ekd_request_logger" in tables:
+                out += self.ekd_request_logger_table
+            if "ekd_session" in tables:
+                out += self.ekd_session_table
+            if "ekd_metadata" in tables:
+                out += self.ekd_metadata_table
 
-        for key, value in sql_scripts.items():
-            out += self.command.format(key, value)
+            for key, value in val.items():
+                out += self.command.format(key, value)
 
         return out
 
