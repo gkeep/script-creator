@@ -63,7 +63,7 @@ class UIMain(Ui_MainWindow):
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
-            self.data[key] = val.replace('$', '\\$').replace('"', '\\\"') # screening
+            self.data[key] = val.replace('$', '\\$').replace('"', '\\\"')  # screening
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -80,6 +80,7 @@ class InputDialog(Ui_inDialog):
         self.window = window
 
         self.saveButton.clicked.connect(lambda: self.__save_data(db))
+        self.cancelButton.clicked.connect(lambda: self.window.close())
 
     def get_data(self) -> {}:
         return self.data
