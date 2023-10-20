@@ -63,7 +63,7 @@ class UIMain(Ui_MainWindow):
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
-            self.data[key] = val
+            self.data[key] = val.replace('$', '\\$').replace('"', '\\\"') # screening
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
