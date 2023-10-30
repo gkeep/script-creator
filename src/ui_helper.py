@@ -67,6 +67,28 @@ class UIMain(Ui_MainWindow):
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
+
+        enabled_tables = []
+
+        if self.checkBox_ca.isChecked(): enabled_tables.append("ekd_ca")
+        if self.checkBox_ekd.isChecked(): enabled_tables.append("ekd_ekd")
+        if self.checkBox_id.isChecked(): enabled_tables.append("ekd_id")
+        if self.checkBox_file.isChecked(): enabled_tables.append("ekd_file")
+        if self.checkBox_file_proc.isChecked(): enabled_tables.append("ekd_file_processing")
+        if self.checkBox_ftp.isChecked(): enabled_tables.append("ekd_ftp_uploader")
+        if self.checkBox_notification.isChecked(): enabled_tables.append("ekd_notification")
+        if self.checkBox_req.isChecked(): enabled_tables.append("ekd_request_logger")
+        if self.checkBox_session.isChecked(): enabled_tables.append("ekd_session")
+        if self.checkBox_metadata.isChecked(): enabled_tables.append("ekd_metadata")
+
+        new_data = data.copy()
+        keys = data.keys()
+        for key in keys:
+            if key not in enabled_tables:
+                new_data.pop(key)
+        data = new_data
+        del new_data
+
         OutputDialog(dialog, data)
         dialog.show()
         dialog.exec_()
@@ -86,9 +108,10 @@ class InputDialog(Ui_inDialog):
         return self.data
 
     def __save_data(self, db_name):
-        self.data = {
-            db_name: self.textEdit.toPlainText()
-        }
+        if self.data != "":
+            self.data = {
+                db_name: self.textEdit.toPlainText()
+            }
         self.window.close()
 
 
