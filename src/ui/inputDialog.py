@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'inputDialogrDprjI.ui'
+## Form generated from reading UI file 'inputDialogbMRcyi.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.8
 ##
@@ -44,15 +44,15 @@ class Ui_inDialog(object):
 
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.cancelButton = QPushButton(inDialog)
-        self.cancelButton.setObjectName(u"cancelButton")
-
-        self.horizontalLayout.addWidget(self.cancelButton)
-
         self.saveButton = QPushButton(inDialog)
         self.saveButton.setObjectName(u"saveButton")
 
         self.horizontalLayout.addWidget(self.saveButton)
+
+        self.cancelButton = QPushButton(inDialog)
+        self.cancelButton.setObjectName(u"cancelButton")
+
+        self.horizontalLayout.addWidget(self.cancelButton)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout)
@@ -66,7 +66,7 @@ class Ui_inDialog(object):
     def retranslateUi(self, inDialog):
         inDialog.setWindowTitle(QCoreApplication.translate("inDialog", u"\u0412\u0432\u043e\u0434 SQL \u0441\u043a\u0440\u0438\u043f\u0442\u0430", None))
         self.groupBox.setTitle(QCoreApplication.translate("inDialog", u"db_name", None))
-        self.cancelButton.setText(QCoreApplication.translate("inDialog", u"\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c", None))
         self.saveButton.setText(QCoreApplication.translate("inDialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
+        self.cancelButton.setText(QCoreApplication.translate("inDialog", u"\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c", None))
     # retranslateUi
 
