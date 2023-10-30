@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'outputWindowmzbdoA.ui'
+## Form generated from reading UI file 'outputWindowzDgfVE.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.15.8
 ##
@@ -33,6 +33,11 @@ class Ui_outDialog(object):
 
         self.verticalLayout.addWidget(self.outputTextEdit)
 
+        self.saveButton = QPushButton(self.groupBox)
+        self.saveButton.setObjectName(u"saveButton")
+
+        self.verticalLayout.addWidget(self.saveButton)
+
 
         self.verticalLayout_2.addWidget(self.groupBox)
 
@@ -45,5 +50,6 @@ class Ui_outDialog(object):
     def retranslateUi(self, outDialog):
         outDialog.setWindowTitle(QCoreApplication.translate("outDialog", u"Bash \u0441\u043a\u0440\u0438\u043f\u0442", None))
         self.groupBox.setTitle("")
+        self.saveButton.setText(QCoreApplication.translate("outDialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
     # retranslateUi
 

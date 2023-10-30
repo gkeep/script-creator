@@ -1,4 +1,4 @@
-from PySide2 import QtGui
+from PySide2 import QtWidgets
 from PySide2.QtWidgets import QDialog
 
 from ui.mainWindow import Ui_MainWindow
@@ -123,3 +123,13 @@ class OutputDialog(Ui_outDialog):
         out = cst.make_script(sql_scripts=data)
 
         self.outputTextEdit.setText(out)
+
+        self.saveButton.clicked.connect(lambda: self.__save_file())
+
+    def __save_file(self):
+        filename, _ = QtWidgets.QFileDialog.getSaveFileName(caption="Сохранить скрипт",
+                                                            filter='Bash скрипт (*.sh)')
+        if ".sh" not in filename: filename += ".sh"
+        if filename:
+            with open(filename, 'w') as file:
+                file.write(self.outputTextEdit.toPlainText())
