@@ -3,7 +3,7 @@ class Constructor:
     head = """#!/bin/bash
 
 docker_pfx="docker exec --user postgres ekd-postgresql"
-if [[ -n "$(command -v docker)" ]] && [[ -n "$(docker container ls --format 'table {{.Names}}' 2>/dev/null | grep 'ekd-postgresql')" ]]; then
+if [[ -n "$(command -v docker)" ]] && [[ -z "$(docker container ls --format 'table {{.Names}}' 2>/dev/null | grep 'ekd-postgresql')" ]]; then
        docker_pfx=""
 fi
     """
