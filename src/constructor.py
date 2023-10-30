@@ -13,13 +13,13 @@ fi
 ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ca%'")
 """
     ekd_ekd_table = """
-ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ekd%' and datname <> 'ekd_ekd'")
+ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ekd_%'")
 """
     ekd_id_table = """
-ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_id%' and datname <> 'ekd_id'")
+ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_id_%'")
 """
     ekd_file_table = """
-ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file%' and datname <> 'ekd_file'")
+ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file_%'")
 """
     ekd_file_processing_table = """
 ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file_processing%'")
@@ -52,7 +52,6 @@ ekd_metadata="ekd_metadata"
 
         tables = sql_scripts.keys()
 
-        # WARNING: ниже говнокод, но я хз как сделать подругому
         if "ekd_ca" in tables:
             out += self.ekd_ca_table
         if "ekd_ekd" in tables:
