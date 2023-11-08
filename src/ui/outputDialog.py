@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'outputWindowzDgfVE.ui'
+## Form generated from reading UI file 'outputWindowPKhxLu.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.10
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -17,7 +17,9 @@ class Ui_outDialog(object):
     def setupUi(self, outDialog):
         if not outDialog.objectName():
             outDialog.setObjectName(u"outDialog")
-        outDialog.resize(850, 600)
+        outDialog.resize(1025, 600)
+        outDialog.setMinimumSize(QSize(500, 300))
+        outDialog.setMaximumSize(QSize(5000, 3000))
         self.verticalLayout_2 = QVBoxLayout(outDialog)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.groupBox = QGroupBox(outDialog)
