@@ -264,16 +264,6 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="pushButton">
-        <property name="enabled">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>TODO: Сконвертировать скрипт</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>

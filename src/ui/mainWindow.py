@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowjUUcsg.ui'
+## Form generated from reading UI file 'mainWindowyRZEht.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.8
+## Created by: Qt User Interface Compiler version 5.15.10
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -211,12 +211,6 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.createScriptButton)
 
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setEnabled(False)
-
-        self.horizontalLayout_2.addWidget(self.pushButton)
-
 
         self.verticalLayout_3.addLayout(self.horizontalLayout_2)
 
@@ -250,6 +244,5 @@ class Ui_MainWindow(object):
         self.checkBox_metadata.setText(QCoreApplication.translate("MainWindow", u"ekd_metadata", None))
         self.scriptInputButton_metadata.setText(QCoreApplication.translate("MainWindow", u"\u0412\u0432\u0435\u0441\u0442\u0438 SQL \u0441\u043a\u0440\u0438\u043f\u0442", None))
         self.createScriptButton.setText(QCoreApplication.translate("MainWindow", u"\u0421\u043e\u0431\u0440\u0430\u0442\u044c bash \u0441\u043a\u0440\u0438\u043f\u0442", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"TODO: \u0421\u043a\u043e\u043d\u0432\u0435\u0440\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0441\u043a\u0440\u0438\u043f\u0442", None))
     # retranslateUi
 
