@@ -84,7 +84,8 @@ ekd_metadata="ekd_metadata"
             for line in sql_script.readlines():
                 script += f"{line}"
 
-        bash_script = self.make_script({db_name: script})
+        bash_script = self.make_script({
+            db_name: script.replace('$', '\\$').replace('"', '\\\"')})
 
         with open(filepath.replace(".sql", ".sh"), 'w') as bash:
             bash.write(bash_script)
