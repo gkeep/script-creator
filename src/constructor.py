@@ -1,3 +1,6 @@
+import sys
+
+
 class Constructor:
     # голова скрипта с проверкой на наличие docker
     head = """#!/bin/bash
@@ -92,14 +95,10 @@ ekd_metadata="ekd_metadata"
 
 
 if __name__ == "__main__":
-    cstr = Constructor()
+    if len(sys.argv) > 1:
+        db = sys.argv[1]
+        script_path = sys.argv[2]
+        cstr = Constructor()
 
-    sql = {
-        "ekd_ekd": """
-    BEGIN;
-    UPDATE employee SET dismissed_date = null WHERE id = '074c8ca6-1037-44c5-a4b1-9a4153ee9823'; 
-    COMMIT;
-        """
-    }
-
-    print(cstr.make_script(sql))
+        cstr.build_specific(db, script_path)
+        sys.exit()
