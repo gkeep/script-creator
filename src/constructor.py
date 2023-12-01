@@ -78,6 +78,17 @@ ekd_metadata="ekd_metadata"
 
         return out
 
+    def build_specific(self, db_name: str, filepath: str):
+        script = ""
+        with open(filepath, 'r') as sql_script:
+            for line in sql_script.readlines():
+                script += f"{line}"
+
+        bash_script = self.make_script({db_name: script})
+
+        with open(filepath.replace(".sql", ".sh"), 'w') as bash:
+            bash.write(bash_script)
+
 
 if __name__ == "__main__":
     cstr = Constructor()
