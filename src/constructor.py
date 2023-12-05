@@ -31,7 +31,7 @@ ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database
 ekd_ftp_uploader=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ftp_uploader%'")
 """
     ekd_notification_table = """
-ekd_notif=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_notification%'")
+ekd_notification=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_notification%'")
 """
     ekd_request_logger_table = """
 ekd_req=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_request_logger%'")
@@ -44,6 +44,8 @@ ekd_metadata="ekd_metadata"
 """
 
     command = '\n$docker_pfx psql --dbname ${} -c "{}"\n'
+    command_with_output = ('\n$docker_pfx psql --dbname ${} -c "COPY(\n{}\n) '
+                           'TO STDOUT DELIMITER E\',\' CSV HEADER;" >> {}\n')
 
     def make_script(self, sql_scripts: dict) -> str:
         """
