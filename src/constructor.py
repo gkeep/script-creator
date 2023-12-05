@@ -1,3 +1,6 @@
+import sys
+
+
 class Constructor:
     # голова скрипта с проверкой на наличие docker
     head = """#!/bin/bash
@@ -28,7 +31,7 @@ ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database
 ekd_ftp_uploader=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ftp_uploader%'")
 """
     ekd_notification_table = """
-ekd_notif=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_notification%'")
+ekd_notification=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_notification%'")
 """
     ekd_request_logger_table = """
 ekd_req=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_request_logger%'")
@@ -41,6 +44,8 @@ ekd_metadata="ekd_metadata"
 """
 
     command = '\n$docker_pfx psql --dbname ${} -c "{}"\n'
+    command_with_output = ('\n$docker_pfx psql --dbname ${} -c "COPY(\n{}\n) '
+                           'TO STDOUT DELIMITER E\',\' CSV HEADER;" >> {}\n')
 
     def make_script(self, sql_scripts: dict) -> str:
         """
@@ -74,7 +79,10 @@ ekd_metadata="ekd_metadata"
             out += self.ekd_metadata_table
 
         for key, value in sql_scripts.items():
-            out += self.command.format(key, value)
+            if value["outfile"] != "":
+                out += self.command_with_output.format(key, value["body"].replace(';', ''), value["outfile"])
+                return out
+            out += self.command.format(key, value["body"])
 
         return out
 
@@ -84,21 +92,18 @@ ekd_metadata="ekd_metadata"
             for line in sql_script.readlines():
                 script += f"{line}"
 
-        bash_script = self.make_script({db_name: script})
+        bash_script = self.make_script({
+            db_name: script.replace('$', '\\$').replace('"', '\\\"')})
 
         with open(filepath.replace(".sql", ".sh"), 'w') as bash:
             bash.write(bash_script)
 
 
 if __name__ == "__main__":
-    cstr = Constructor()
+    if len(sys.argv) > 1:
+        db = sys.argv[1]
+        script_path = sys.argv[2]
+        cstr = Constructor()
 
-    sql = {
-        "ekd_ekd": """
-    BEGIN;
-    UPDATE employee SET dismissed_date = null WHERE id = '074c8ca6-1037-44c5-a4b1-9a4153ee9823'; 
-    COMMIT;
-        """
-    }
-
-    print(cstr.make_script(sql))
+        cstr.build_specific(db, script_path)
+        sys.exit()

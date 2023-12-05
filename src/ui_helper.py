@@ -63,7 +63,13 @@ class UIMain(Ui_MainWindow):
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
-            self.data[key] = val.replace('$', '\\$').replace('"', '\\\"')  # screening
+            body = val[0].replace('$', '\\$').replace('"', '\\\"')  # screening
+            outfile = val[1]
+
+            self.data[key] = {
+                "body": body,
+                "outfile": outfile
+            }
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -103,15 +109,22 @@ class InputDialog(Ui_inDialog):
 
         self.saveButton.clicked.connect(lambda: self.__save_data(db))
         self.cancelButton.clicked.connect(lambda: self.window.close())
+        self.outputToFile.clicked.connect(lambda: self.toggle_output_to_file())
 
     def get_data(self) -> {}:
         return self.data
 
+    def toggle_output_to_file(self):
+        if self.outputToFile.isChecked():
+            self.outputFileName.setEnabled(True)
+
     def __save_data(self, db_name):
+        outfile = self.outputFileName.text()
         if self.data != "":
             self.data = {
-                db_name: self.textEdit.toPlainText()
+                db_name: [self.textEdit.toPlainText(), outfile]
             }
+
         self.window.close()
 
 
