@@ -1,9 +1,15 @@
+from calendar import timegm
+
 from PySide2 import QtWidgets
 from PySide2.QtWidgets import QDialog
+import requests
+import os.path
+import time
 
 from ui.mainWindow import Ui_MainWindow
 from ui.inputDialog import Ui_inDialog
 from ui.outputDialog import Ui_outDialog
+from ui.updateDialog import Ui_updateDialog
 from constructor import Constructor
 
 
@@ -18,6 +24,8 @@ class UIMain(Ui_MainWindow):
     data = {}
 
     def __init__(self, MainWindow):
+        self.__check_for_updates()
+
         super().setupUi(MainWindow)
 
         # bind all buttons to checkboxes
@@ -70,6 +78,21 @@ class UIMain(Ui_MainWindow):
                 "body": body,
                 "outfile": outfile
             }
+
+    def __check_for_updates(self):
+        response = requests.get("https://api.github.com/repos/gkeep/script-creator/releases/latest").json()
+
+        new_publish_date = timegm(time.strptime(response["published_at"], "%Y-%m-%dT%H:%M:%SZ"))
+        mod_date = os.path.getctime(os.path.abspath(__file__))
+
+        # is_new_version_available = new_publish_date > mod_date
+        is_new_version_available = True
+        if is_new_version_available:
+            dialog = QDialog()
+            UpdateDialog(dialog, response["name"], time.ctime(new_publish_date), response["body"])
+            dialog.show()
+            dialog.exec_()
+
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -146,3 +169,13 @@ class OutputDialog(Ui_outDialog):
         if filename:
             with open(filename, 'w') as file:
                 file.write(self.outputTextEdit.toPlainText())
+
+
+class UpdateDialog(Ui_updateDialog):
+    def __init__(self, window, version, v_time, body):
+        super().setupUi(window)
+        formatted_body = str(body).replace('\r\n', '<br>')
+
+        self.updateTextBrowser.setHtml(f"<b>Доступно новое обновление - {version} ({v_time})</b><br>"
+                                    f"<br>{formatted_body}<br><br>"
+                                    f"Скачать можно по <a href='https://github.com/gkeep/script-creator/releases/latest'>ссылке</a> (GitHub)")
