@@ -13,16 +13,16 @@ fi
 
     # таблицы
     ekd_ca_table = """
-ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ca%'")
+ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ca\_%'")
 """
     ekd_ekd_table = """
-ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ekd_%'")
+ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ekd\_%'")
 """
     ekd_id_table = """
-ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_id_%'")
+ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_id\_%'")
 """
     ekd_file_table = """
-ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file_%'")
+ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file\_%'")
 """
     ekd_file_processing_table = """
 ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file_processing%'")
