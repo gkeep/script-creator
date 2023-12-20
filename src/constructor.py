@@ -13,31 +13,31 @@ fi
 
     # таблицы
     ekd_ca_table = """
-ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ca\_%'")
+ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ca_'")
 """
     ekd_ekd_table = """
-ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ekd\_%'")
+ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ekd_'")
 """
     ekd_id_table = """
-ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_id\_%'")
+ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_id_'")
 """
     ekd_file_table = """
-ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file\_%'")
+ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_file_[^proc%]'")
 """
     ekd_file_processing_table = """
-ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_file_processing%'")
+ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_file_processing'")
 """
     ekd_ftp_uploader_table = """
-ekd_ftp_uploader=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_ftp_uploader%'")
+ekd_ftp_uploader=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ftp_uploader'")
 """
     ekd_notification_table = """
-ekd_notification=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_notification%'")
+ekd_notification=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_notification'")
 """
     ekd_request_logger_table = """
-ekd_req=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_request_logger%'")
+ekd_request_logger=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_request_logger'")
 """
     ekd_session_table = """
-ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ILIKE '%ekd_session%'")
+ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_session'")
 """
     ekd_metadata_table = """
 ekd_metadata="ekd_metadata"
