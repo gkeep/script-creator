@@ -40,11 +40,6 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTextEdit" name="textEdit">
-        <property name="font">
-         <font>
-          <family>Ubuntu Mono</family>
-         </font>
-        </property>
        </widget>
       </item>
       <item>

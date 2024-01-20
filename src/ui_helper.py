@@ -1,16 +1,18 @@
-from calendar import timegm
-
-from PySide6 import QtWidgets
-from PySide6.QtWidgets import QDialog
-import requests
 import os.path
 import time
+from calendar import timegm
 
-from ui.mainWindow import Ui_MainWindow
-from ui.inputDialog import Ui_inDialog
-from ui.outputDialog import Ui_outDialog
-from ui.updateDialog import Ui_updateDialog
+import requests
+from PySide6 import QtWidgets, QtUiTools
+from PySide6.QtWidgets import QDialog
+from markdown import markdown
+
 from constructor import Constructor
+
+Ui_MainWindow, QMainWindowBase = QtUiTools.loadUiType("src/ui/mainWindow.ui")
+Ui_inDialog, QInputDialogBase = QtUiTools.loadUiType("src/ui/inputDialog.ui")
+Ui_outDialog, QOutputDialogBase = QtUiTools.loadUiType("src/ui/outputWindow.ui")
+Ui_updateDialog, QUpdateDialogBase = QtUiTools.loadUiType("src/ui/updateDialog.ui")
 
 
 def toggle_button(state, button):
@@ -20,13 +22,14 @@ def toggle_button(state, button):
     button.setEnabled(False)
 
 
-class UIMain(Ui_MainWindow):
+class UIMain(QtWidgets.QMainWindow, Ui_MainWindow):
     data = {}
 
-    def __init__(self, MainWindow):
+    def __init__(self, main_window):
         self.__check_for_updates()
 
-        super().setupUi(MainWindow)
+        super().__init__()
+        self.setupUi(main_window)
 
         # bind all buttons to checkboxes
         self.checkBox_ca.stateChanged.connect(
@@ -67,7 +70,7 @@ class UIMain(Ui_MainWindow):
         dialog = QDialog()
         dl = InputDialog(dialog, db_name, data)
         dialog.show()
-        dialog.exec_()
+        dialog.exec()
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
@@ -85,13 +88,12 @@ class UIMain(Ui_MainWindow):
         new_publish_date = timegm(time.strptime(response["published_at"], "%Y-%m-%dT%H:%M:%SZ"))
         mod_date = os.path.getctime(os.path.abspath(__file__ + "/.."))
 
-        is_new_version_available = new_publish_date > mod_date
+        is_new_version_available = new_publish_date < mod_date
         if is_new_version_available:
             dialog = QDialog()
             UpdateDialog(dialog, response["name"], time.ctime(new_publish_date), response["body"])
             dialog.show()
-            dialog.exec_()
-
+            dialog.exec()
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -124,8 +126,11 @@ class UIMain(Ui_MainWindow):
 
 class InputDialog(Ui_inDialog):
     def __init__(self, window, db, data):
-        super().setupUi(window)
+        super().__init__()
+        self.setupUi(window)
+
         self.groupBox.setTitle(db)
+        self.textEdit.setStyleSheet("font-family: 'Monaco', 'Ubuntu Mono', 'Courier New', monospace;")
         self.data = data
         self.window = window
 
@@ -152,11 +157,13 @@ class InputDialog(Ui_inDialog):
 
 class OutputDialog(Ui_outDialog):
     def __init__(self, window, data):
-        super().setupUi(window)
+        super().__init__()
+        self.setupUi(window)
 
         cst = Constructor()
         out = cst.make_script(sql_scripts=data)
 
+        self.outputTextEdit.setStyleSheet("font-family: 'Monaco', 'Ubuntu Mono', 'Courier New', monospace;")
         self.outputTextEdit.setText(out)
 
         self.saveButton.clicked.connect(lambda: self.__save_file())
@@ -172,9 +179,11 @@ class OutputDialog(Ui_outDialog):
 
 class UpdateDialog(Ui_updateDialog):
     def __init__(self, window, version, v_time, body):
-        super().setupUi(window)
-        formatted_body = str(body).replace('\r\n', '<br>')
+        super().__init__()
+        self.setupUi(window)
 
-        self.updateTextBrowser.setHtml(f"<b>Доступно новое обновление - {version} ({v_time})</b><br>"
+        formatted_body = markdown(body)
+
+        self.textBrowser.setHtml(f"<b>Доступно новое обновление - {version} ({v_time})</b><br>"
                                     f"<br>{formatted_body}<br><br>"
                                     f"Скачать можно по <a href='https://github.com/gkeep/script-creator/releases/latest'>ссылке</a> (GitHub)")
