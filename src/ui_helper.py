@@ -1,7 +1,7 @@
 from calendar import timegm
 
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog
 import requests
 import os.path
 import time
