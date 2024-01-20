@@ -136,6 +136,13 @@ class InputDialog(Ui_inDialog):
         self.cancelButton.clicked.connect(lambda: self.window.close())
         self.outputToFile.clicked.connect(lambda: self.toggle_output_to_file())
 
+        if data != {} and db in data.keys():
+            self.textEdit.setText(data[db]["body"])
+            if data[db]["outfile"]:
+                self.outputToFile.setChecked(True)
+                self.outputFileName.setEnabled(True)
+                self.outputFileName.setText(data[db]["outfile"])
+
     def get_data(self) -> {}:
         return self.data
 
