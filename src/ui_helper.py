@@ -74,12 +74,9 @@ class UIMain(QtWidgets.QMainWindow, Ui_MainWindow):
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
-            body = val[0].replace('$', '\\$').replace('"', '\\\"')  # screening
-            outfile = val[1]
-
             self.data[key] = {
-                "body": body,
-                "outfile": outfile
+                "body": val[0],
+                "outfile": val[1]
             }
 
     @staticmethod

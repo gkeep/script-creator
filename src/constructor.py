@@ -79,10 +79,11 @@ ekd_metadata="ekd_metadata"
             out += self.ekd_metadata_table
 
         for key, value in sql_scripts.items():
+            body = value["body"].replace('$', '\\$').replace('"', '\\\"')
             if value["outfile"] != "":
-                out += self.command_with_output.format(key, value["body"].replace(';', ''), value["outfile"])
-                return out
-            out += self.command.format(key, value["body"])
+                out += self.command_with_output.format(key, body.replace(';', ''), value["outfile"])
+            else:
+                out += self.command.format(key, body)
 
         return out
 
