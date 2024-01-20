@@ -82,13 +82,14 @@ class UIMain(QtWidgets.QMainWindow, Ui_MainWindow):
                 "outfile": outfile
             }
 
-    def __check_for_updates(self):
+    @staticmethod
+    def __check_for_updates():
         response = requests.get("https://api.github.com/repos/gkeep/script-creator/releases/latest").json()
 
         new_publish_date = timegm(time.strptime(response["published_at"], "%Y-%m-%dT%H:%M:%SZ"))
         mod_date = os.path.getctime(os.path.abspath(__file__ + "/.."))
 
-        is_new_version_available = new_publish_date < mod_date
+        is_new_version_available = new_publish_date > mod_date
         if is_new_version_available:
             dialog = QDialog()
             UpdateDialog(dialog, response["name"], time.ctime(new_publish_date), response["body"])
