@@ -1,7 +1,7 @@
 version = 2024.01.0
 
 build_linux:
-	pyinstaller --onefile src/main.py --name script_creator_$(version).bin  --add-data=src/ui:src/ui
+	pyinstaller --onefile src/main.py --name script_creator_$(version).bin
 
 build_linux_docker: build_linux
 	mv dist/script_creator_$(version).bin /app/builds
@@ -11,7 +11,4 @@ build_linux_cli_docker:
 	mv dist/script_creator_cli.bin /app/builds
 
 build_windows:
-	pyinstaller --noconsole --onefile src/main.py --name script_creator_$(version).exe  --add-data=src/ui:src/ui
-
-compile_ui:
-	bash -c 'cd src; for item in ui/*.ui; do pyside6-uic -g python $item -o ui/compiled/$item; done'
+	pyinstaller --noconsole --onefile src/main.py --name script_creator_$(version).exe

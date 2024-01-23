@@ -3,8 +3,8 @@ import time
 from calendar import timegm
 
 import requests
-from PySide6 import QtWidgets
-from PySide6.QtWidgets import QDialog
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QDialog
 from markdown import markdown
 
 from ui.inputDialog import Ui_inDialog
@@ -28,8 +28,7 @@ class UIMain(Ui_MainWindow):
     def __init__(self, main_window):
         self.__check_for_updates()
 
-        super().__init__()
-        self.setupUi(main_window)
+        super().setupUi(main_window)
 
         # bind all buttons to checkboxes
         self.checkBox_ca.stateChanged.connect(
@@ -70,7 +69,7 @@ class UIMain(Ui_MainWindow):
         dialog = QDialog()
         dl = InputDialog(dialog, db_name, data)
         dialog.show()
-        dialog.exec()
+        dialog.exec_()
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
@@ -91,7 +90,7 @@ class UIMain(Ui_MainWindow):
             dialog = QDialog()
             UpdateDialog(dialog, response["name"], time.ctime(new_publish_date), response["body"])
             dialog.show()
-            dialog.exec()
+            dialog.exec_()
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -124,8 +123,7 @@ class UIMain(Ui_MainWindow):
 
 class InputDialog(Ui_inDialog):
     def __init__(self, window, db, data):
-        super().__init__()
-        self.setupUi(window)
+        super().setupUi(window)
 
         self.groupBox.setTitle(db)
         self.textEdit.setStyleSheet("font-family: 'Monaco', 'Ubuntu Mono', 'Courier New', monospace;")
@@ -162,8 +160,7 @@ class InputDialog(Ui_inDialog):
 
 class OutputDialog(Ui_outDialog):
     def __init__(self, window, data):
-        super().__init__()
-        self.setupUi(window)
+        super().setupUi(window)
 
         cst = Constructor()
         out = cst.make_script(sql_scripts=data)
@@ -184,8 +181,7 @@ class OutputDialog(Ui_outDialog):
 
 class UpdateDialog(Ui_updateDialog):
     def __init__(self, window, version, v_time, body):
-        super().__init__()
-        self.setupUi(window)
+        super().setupUi(window)
 
         formatted_body = markdown(body)
 
