@@ -3,16 +3,16 @@ import time
 from calendar import timegm
 
 import requests
-from PySide6 import QtWidgets, QtUiTools
+from PySide6 import QtWidgets
 from PySide6.QtWidgets import QDialog
 from markdown import markdown
 
-from constructor import Constructor
+from ui.inputDialog import Ui_inDialog
+from ui.updateDialog import Ui_updateDialog
+from ui.mainWindow import Ui_MainWindow
+from ui.outputWindow import Ui_outDialog
 
-Ui_MainWindow, QMainWindowBase = QtUiTools.loadUiType("src/ui/mainWindow.ui")
-Ui_inDialog, QInputDialogBase = QtUiTools.loadUiType("src/ui/inputDialog.ui")
-Ui_outDialog, QOutputDialogBase = QtUiTools.loadUiType("src/ui/outputWindow.ui")
-Ui_updateDialog, QUpdateDialogBase = QtUiTools.loadUiType("src/ui/updateDialog.ui")
+from constructor import Constructor
 
 
 def toggle_button(state, button):
@@ -22,7 +22,7 @@ def toggle_button(state, button):
     button.setEnabled(False)
 
 
-class UIMain(QtWidgets.QMainWindow, Ui_MainWindow):
+class UIMain(Ui_MainWindow):
     data = {}
 
     def __init__(self, main_window):
