@@ -1,4 +1,4 @@
-version = "2023.12.2"
+version = 2024.01.0
 
 build_linux:
 	pyinstaller --onefile src/main.py --name script_creator_$(version).bin
