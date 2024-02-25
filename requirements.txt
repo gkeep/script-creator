@@ -2,7 +2,7 @@ altgraph
 packaging
 pyinstaller
 pyinstaller-hooks-contrib
-PySide2
-shiboken2
+PySide6
+shiboken6
 requests
 markdown

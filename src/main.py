@@ -1,7 +1,7 @@
 import sys
 
 from ui_helper import UIMain
-from PySide2.QtWidgets import QMainWindow, QApplication
+from PySide6.QtWidgets import QMainWindow, QApplication
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -10,4 +10,4 @@ if __name__ == "__main__":
     content = UIMain(MainWindow)
 
     MainWindow.show()
-    sys.exit(app.exec_())
+    sys.exit(app.exec())

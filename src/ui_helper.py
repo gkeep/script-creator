@@ -3,8 +3,8 @@ import time
 from calendar import timegm
 
 import requests
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog
 from markdown import markdown
 
 from ui.inputDialog import Ui_inDialog
@@ -69,7 +69,7 @@ class UIMain(Ui_MainWindow):
         dialog = QDialog()
         dl = InputDialog(dialog, db_name, data)
         dialog.show()
-        dialog.exec_()
+        dialog.exec()
 
         new_data: dict = dl.get_data()
         for key, val in new_data.items():
@@ -90,7 +90,7 @@ class UIMain(Ui_MainWindow):
             dialog = QDialog()
             UpdateDialog(dialog, response["name"], time.ctime(new_publish_date), response["body"])
             dialog.show()
-            dialog.exec_()
+            dialog.exec()
 
     def __open_output_dialog(self, data):
         dialog = QDialog()
@@ -118,7 +118,7 @@ class UIMain(Ui_MainWindow):
 
         OutputDialog(dialog, data)
         dialog.show()
-        dialog.exec_()
+        dialog.exec()
 
 
 class InputDialog(Ui_inDialog):
