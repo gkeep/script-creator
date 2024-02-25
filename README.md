@@ -1,12 +1,21 @@
 # Script-creator
 
-An application to create `bash` scripts from SQL scripts to execute them on machines running
-`PostgresSQL` inside/outside a `docker` container.
+An application to generate `bash` scripts from SQL scripts for execution on machines running `PostgreSQL`, 
+whether inside or outside a `Docker` container.
 
 ## Why?
 
-Because you need an easy to use and a polished solution for a mundane task.
-Plus your error rate will be much lower, because all `bash` parts of the final script have been thoroughly tested.
+Because you need an easy-to-use and a polished solution for a mundane task.
+
+Plus you're less likely to make a mistake, as all `bash` parts of the script have been thoroughly tested.
+
+## Screenshots
+
+![Main Window](screenshots/mainwindow_macos.png)
+
+![SQL Input Window](screenshots/inputwindow_macos.png)
+
+![BASH Output Window](screenshots/outputwindow_macos.png)
 
 ## Installation
 
@@ -27,6 +36,3 @@ Now you can build the application binary or run it from your IDE of choice.
 
 Building the binary (Linux & Windows)
     `make build_linux` or `make build_windows`, depending on your OS
-
-
-TODO: add screenshots
