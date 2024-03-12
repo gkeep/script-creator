@@ -79,7 +79,10 @@ ekd_metadata="ekd_metadata"
             out += self.ekd_metadata_table
 
         for key, value in sql_scripts.items():
-            body = value["body"].replace('$', '\\$').replace('"', '\\\"')
+            body = ""
+            if key != "ekd_metadata":
+                body += f"SET search_path to public, {key};\n"
+            body += value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
             if value["outfile"] != "":
                 out += self.command_with_output.format(key, body.replace(';', ''), value["outfile"])
             else:
