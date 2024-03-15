@@ -39,9 +39,11 @@ ekd_request_logger=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database 
     ekd_session_table = """
 ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_session'")
 """
-    ekd_metadata_table = """
-ekd_metadata="ekd_metadata"
-"""
+    ekd_metadata_table = 'ekd_metadata="ekd_metadata"'
+    ekd_repeat_table = 'ekd_repeat_notification="ekd_repeat_notification_db"'
+    ekd_calendar_table = 'ekd_calendar="ekd_calendar_db"'
+    ekd_chat_table = 'ekd_chat="ekd_chat_db"'
+    ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
     command = '\n$docker_pfx psql --dbname ${} -c "{}"\n'
     command_with_output = ('\n$docker_pfx psql --dbname ${} -c "COPY(\n{}\n) '
@@ -67,8 +69,6 @@ ekd_metadata="ekd_metadata"
             out += self.ekd_file_table
         if "ekd_file_processing" in tables:
             out += self.ekd_file_processing_table
-        if "ekd_ftp_uploader" in tables:
-            out += self.ekd_ftp_uploader_table
         if "ekd_notification" in tables:
             out += self.ekd_notification_table
         if "ekd_request_logger" in tables:
@@ -77,10 +77,18 @@ ekd_metadata="ekd_metadata"
             out += self.ekd_session_table
         if "ekd_metadata" in tables:
             out += self.ekd_metadata_table
+        if "ekd_repeat_notification" in tables:
+            out += self.ekd_repeat_table
+        if "ekd_calendar" in tables:
+            out += self.ekd_calendar_table
+        if "ekd_chat" in tables:
+            out += self.ekd_chat_table
+        if "ekd_showcase" in tables:
+            out += self.ekd_showcase_db
 
         for key, value in sql_scripts.items():
             body = ""
-            if key != "ekd_metadata":
+            if key not in ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase"):
                 body += f"SET search_path to public, {key};\n"
             body += value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
             if value["outfile"] != "":

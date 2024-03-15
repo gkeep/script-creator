@@ -41,27 +41,33 @@ class UIMain(Ui_MainWindow):
             lambda: toggle_button(self.checkBox_file.isChecked(), self.scriptInputButton_file))
         self.checkBox_file_proc.stateChanged.connect(
             lambda: toggle_button(self.checkBox_file_proc.isChecked(), self.scriptInputButton_file_proc))
-        self.checkBox_ftp.stateChanged.connect(
-            lambda: toggle_button(self.checkBox_ftp.isChecked(), self.scriptInputButton_ftp))
         self.checkBox_notification.stateChanged.connect(
             lambda: toggle_button(self.checkBox_notification.isChecked(), self.scriptInputButton_notification))
         self.checkBox_req.stateChanged.connect(
             lambda: toggle_button(self.checkBox_req.isChecked(), self.scriptInputButton_req))
         self.checkBox_session.stateChanged.connect(
             lambda: toggle_button(self.checkBox_session.isChecked(), self.scriptInputButton_session))
-        self.checkBox_metadata.stateChanged.connect(
-            lambda: toggle_button(self.checkBox_metadata.isChecked(), self.scriptInputButton_metadata))
+        self.checkBox_repeat.stateChanged.connect(
+            lambda: toggle_button(self.checkBox_repeat.isChecked(), self.scriptInputButton_repeat))
+        self.checkBox_calendar.stateChanged.connect(
+            lambda: toggle_button(self.checkBox_calendar.isChecked(), self.scriptInputButton_calendar))
+        self.checkBox_chat.stateChanged.connect(
+            lambda: toggle_button(self.checkBox_chat.isChecked(), self.scriptInputButton_chat))
+        self.checkBox_showcase.stateChanged.connect(
+            lambda: toggle_button(self.checkBox_showcase.isChecked(), self.scriptInputButton_showcase))
 
         self.scriptInputButton_ca.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_ca", data=self.data))
         self.scriptInputButton_ekd.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_ekd", data=self.data))
         self.scriptInputButton_id.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_id", data=self.data))
         self.scriptInputButton_file.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_file", data=self.data))
         self.scriptInputButton_file_proc.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_file_processing", data=self.data))
-        self.scriptInputButton_ftp.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_ftp_uploader", data=self.data))
         self.scriptInputButton_notification.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_notification", data=self.data))
         self.scriptInputButton_req.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_request_logger", data=self.data))
         self.scriptInputButton_session.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_session", data=self.data))
-        self.scriptInputButton_metadata.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_metadata", data=self.data))
+        self.scriptInputButton_repeat.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_repeat_notification", data=self.data))
+        self.scriptInputButton_calendar.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_calendar", data=self.data))
+        self.scriptInputButton_chat.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_chat", data=self.data))
+        self.scriptInputButton_showcase.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_showcase", data=self.data))
 
         self.createScriptButton.clicked.connect(lambda: self.__open_output_dialog(self.data))
 
@@ -102,11 +108,14 @@ class UIMain(Ui_MainWindow):
         if self.checkBox_id.isChecked(): enabled_tables.append("ekd_id")
         if self.checkBox_file.isChecked(): enabled_tables.append("ekd_file")
         if self.checkBox_file_proc.isChecked(): enabled_tables.append("ekd_file_processing")
-        if self.checkBox_ftp.isChecked(): enabled_tables.append("ekd_ftp_uploader")
         if self.checkBox_notification.isChecked(): enabled_tables.append("ekd_notification")
         if self.checkBox_req.isChecked(): enabled_tables.append("ekd_request_logger")
         if self.checkBox_session.isChecked(): enabled_tables.append("ekd_session")
         if self.checkBox_metadata.isChecked(): enabled_tables.append("ekd_metadata")
+        if self.checkBox_repeat.isChecked(): enabled_tables.append("ekd_repeat_notification")
+        if self.checkBox_calendar.isChecked(): enabled_tables.append("ekd_calendar")
+        if self.checkBox_chat.isChecked(): enabled_tables.append("ekd_chat")
+        if self.checkBox_showcase.isChecked(): enabled_tables.append("ekd_showcase")
 
         new_data = data.copy()
         keys = data.keys()
