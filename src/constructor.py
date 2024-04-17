@@ -9,44 +9,34 @@ docker_pfx=""
 if [[ -n "$(command -v docker)" ]] && [[ -n "$(docker container ls --format 'table {{.Names}}' 2>/dev/null | grep 'ekd-postgresql')" ]]; then
        docker_pfx="docker exec --user postgres ekd-postgresql"
 fi
+
+get_db() {
+    local db_name=$1
+    if [[ "$db_name" == 'ekd_file' ]]; then
+            db_name='ekd_file_[^proc%]'
+    fi
+
+    result=$($docker_pfx psql -A -t -c "
+    SELECT
+        CASE
+            WHEN datname ~ '_main' THEN datname
+            ELSE (SELECT datname FROM pg_database WHERE datname ~ '_$db_name' LIMIT 1)
+        END AS dn
+    FROM pg_database
+    WHERE (datname ~ '_main' OR datname ~ '_$db_name') AND datname IS NOT NULL LIMIT 1;")
+
+    echo "$result"
+}
     """
 
-    # таблицы
-    ekd_ca_table = """
-ekd_ca=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ca_'")
-"""
-    ekd_ekd_table = """
-ekd_ekd=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ekd_'")
-"""
-    ekd_id_table = """
-ekd_id=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_id_'")
-"""
-    ekd_file_table = """
-ekd_file=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_file_[^proc%]'")
-"""
-    ekd_file_processing_table = """
-ekd_file_processing=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_file_processing'")
-"""
-    ekd_ftp_uploader_table = """
-ekd_ftp_uploader=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_ftp_uploader'")
-"""
-    ekd_notification_table = """
-ekd_notification=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_notification'")
-"""
-    ekd_request_logger_table = """
-ekd_request_logger=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_request_logger'")
-"""
-    ekd_session_table = """
-ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE datname ~ 'ekd_session'")
-"""
-    ekd_metadata_table = 'ekd_metadata="ekd_metadata"'
-    ekd_repeat_table = 'ekd_repeat_notification="ekd_repeat_notification_db"'
-    ekd_calendar_table = 'ekd_calendar="ekd_calendar_db"'
-    ekd_chat_table = 'ekd_chat="ekd_chat_db"'
+    ekd_metadata_table = '\nekd_metadata="ekd_metadata"'
+    ekd_repeat_table = '\nekd_repeat_notification="ekd_repeat_notification_db"'
+    ekd_calendar_table = '\nekd_calendar="ekd_calendar_db"'
+    ekd_chat_table = '\nekd_chat="ekd_chat_db"'
     ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
-    command = '\n$docker_pfx psql --dbname ${} -c "{}"\n'
-    command_with_output = ('\n$docker_pfx psql --dbname ${} -c "COPY(\n{}\n) '
+    command = '\n$docker_pfx psql --dbname $(get_db "{}") -c "{}"\n'
+    command_with_output = ('\n$docker_pfx psql --dbname $(get_db "{}") -c "COPY(\n{}\n) '
                            'TO STDOUT DELIMITER E\',\' CSV HEADER;" >> {}\n')
 
     def make_script(self, sql_scripts: dict) -> str:
@@ -59,22 +49,6 @@ ekd_session=$($docker_pfx psql -A -t -c "SELECT datname FROM pg_database WHERE d
 
         tables = sql_scripts.keys()
 
-        if "ekd_ca" in tables:
-            out += self.ekd_ca_table
-        if "ekd_ekd" in tables:
-            out += self.ekd_ekd_table
-        if "ekd_id" in tables:
-            out += self.ekd_id_table
-        if "ekd_file" in tables:
-            out += self.ekd_file_table
-        if "ekd_file_processing" in tables:
-            out += self.ekd_file_processing_table
-        if "ekd_notification" in tables:
-            out += self.ekd_notification_table
-        if "ekd_request_logger" in tables:
-            out += self.ekd_request_logger_table
-        if "ekd_session" in tables:
-            out += self.ekd_session_table
         if "ekd_metadata" in tables:
             out += self.ekd_metadata_table
         if "ekd_repeat_notification" in tables:
