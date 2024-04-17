@@ -35,7 +35,7 @@ get_db() {
     ekd_chat_table = '\nekd_chat="ekd_chat_db"'
     ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
-    command = '\n$docker_pfx psql --dbname {}{} -c "{}"\n'
+    command = '\n$docker_pfx psql --dbname {}{} -c "{}"'
 
     def make_script(self, sql_scripts: dict) -> str:
         """
@@ -59,8 +59,9 @@ get_db() {
 
             if value["outfile"] != "":
                 out += self.command.format(dbname, " -A -t",
-                               (f'SET search_path to public, {key};\n'
-                                f'COPY({body}) TO STDOUT DELIMITER E\',\' CSV HEADER;" ' + f'>> {value["outfile"]}'))
+                                           (f'SET search_path to public, {key};\n'
+                                            f'COPY({body}) TO STDOUT DELIMITER E\',\' CSV HEADER;'))
+                out += f' >> {value["outfile"]}'
             else:
                 out += self.command.format(dbname, "", body)
 
