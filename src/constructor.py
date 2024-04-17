@@ -35,9 +35,7 @@ get_db() {
     ekd_chat_table = '\nekd_chat="ekd_chat_db"'
     ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
-    command = '\n$docker_pfx psql --dbname {} -c "{}"\n'
-    command_with_output = ('\n$docker_pfx psql --dbname {} -c "COPY(\n{}\n) '
-                           'TO STDOUT DELIMITER E\',\' CSV HEADER;" >> {}\n')
+    command = '\n$docker_pfx psql --dbname {}{} -c "{}"\n'
 
     def make_script(self, sql_scripts: dict) -> str:
         """
@@ -50,20 +48,21 @@ get_db() {
         container_dbs = ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase")
 
         for key, value in sql_scripts.items():
-            body = ""
+            body = value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
+
             dbname = f"{key}_db"
             if key not in container_dbs:
-                body += f"SET search_path to public, {key};\n"
                 dbname = f"$(get_db '{key}')"
 
             if dbname == 'ekd_metadata_db':
                 dbname = 'ekd_metadata'
 
-            body += value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
             if value["outfile"] != "":
-                out += self.command_with_output.format(dbname, body.replace(';', ''), value["outfile"])
+                out += self.command.format(dbname, " -A -t",
+                               (f'SET search_path to public, {key};\n'
+                                f'COPY({body}) TO STDOUT DELIMITER E\',\' CSV HEADER;" ' + f'>> {value["outfile"]}'))
             else:
-                out += self.command.format(dbname, body)
+                out += self.command.format(dbname, "", body)
 
         return out
 
