@@ -35,8 +35,8 @@ get_db() {
     ekd_chat_table = '\nekd_chat="ekd_chat_db"'
     ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
-    command = '\n$docker_pfx psql --dbname $(get_db "{}") -c "{}"\n'
-    command_with_output = ('\n$docker_pfx psql --dbname $(get_db "{}") -c "COPY(\n{}\n) '
+    command = '\n$docker_pfx psql --dbname {} -c "{}"\n'
+    command_with_output = ('\n$docker_pfx psql --dbname {} -c "COPY(\n{}\n) '
                            'TO STDOUT DELIMITER E\',\' CSV HEADER;" >> {}\n')
 
     def make_script(self, sql_scripts: dict) -> str:
@@ -47,28 +47,23 @@ get_db() {
         """
         out = self.head
 
-        tables = sql_scripts.keys()
-
-        if "ekd_metadata" in tables:
-            out += self.ekd_metadata_table
-        if "ekd_repeat_notification" in tables:
-            out += self.ekd_repeat_table
-        if "ekd_calendar" in tables:
-            out += self.ekd_calendar_table
-        if "ekd_chat" in tables:
-            out += self.ekd_chat_table
-        if "ekd_showcase" in tables:
-            out += self.ekd_showcase_db
+        container_dbs = ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase")
 
         for key, value in sql_scripts.items():
             body = ""
-            if key not in ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase"):
+            dbname = f"{key}_db"
+            if key not in container_dbs:
                 body += f"SET search_path to public, {key};\n"
+                dbname = f"$(get_db '{key}')"
+
+            if dbname == 'ekd_metadata_db':
+                dbname = 'ekd_metadata'
+
             body += value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
             if value["outfile"] != "":
-                out += self.command_with_output.format(key, body.replace(';', ''), value["outfile"])
+                out += self.command_with_output.format(dbname, body.replace(';', ''), value["outfile"])
             else:
-                out += self.command.format(key, body)
+                out += self.command.format(dbname, body)
 
         return out
 
