@@ -3,8 +3,8 @@ import time
 from calendar import timegm
 
 import requests
-from PySide6 import QtWidgets
-from PySide6.QtWidgets import QDialog
+from PySide2 import QtWidgets
+from PySide2.QtWidgets import QDialog
 from markdown import markdown
 
 from ui.inputDialog import Ui_inDialog
@@ -45,6 +45,8 @@ class UIMain(Ui_MainWindow):
             lambda: toggle_button(self.checkBox_notification.isChecked(), self.scriptInputButton_notification))
         self.checkBox_req.stateChanged.connect(
             lambda: toggle_button(self.checkBox_req.isChecked(), self.scriptInputButton_req))
+        self.checkBox_metadata.stateChanged.connect(
+            lambda: toggle_button(self.checkBox_metadata.isChecked(), self.scriptInputButton_metadata))
         self.checkBox_session.stateChanged.connect(
             lambda: toggle_button(self.checkBox_session.isChecked(), self.scriptInputButton_session))
         self.checkBox_repeat.stateChanged.connect(
@@ -64,6 +66,7 @@ class UIMain(Ui_MainWindow):
         self.scriptInputButton_notification.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_notification", data=self.data))
         self.scriptInputButton_req.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_request_logger", data=self.data))
         self.scriptInputButton_session.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_session", data=self.data))
+        self.scriptInputButton_metadata.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_metadata", data=self.data))
         self.scriptInputButton_repeat.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_repeat_notification", data=self.data))
         self.scriptInputButton_calendar.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_calendar", data=self.data))
         self.scriptInputButton_chat.clicked.connect(lambda: self.open_input_dialog(db_name="ekd_chat", data=self.data))
