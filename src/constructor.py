@@ -63,7 +63,7 @@ get_db() {
                                             f'COPY({body}) TO STDOUT DELIMITER E\',\' CSV HEADER;'))
                 out += f' >> {value["outfile"]}'
             else:
-                out += self.command.format(dbname, "", body)
+                out += self.command.format(dbname, "", f"SET search_path to public, {key};\n{body}")
 
         return out
 
