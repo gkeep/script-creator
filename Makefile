@@ -1,4 +1,4 @@
-version = 2024.4.1
+version = 2024.4.2-qt6
 
 build_linux:
 	pyinstaller --onefile src/main.py --name script_creator_$(version).bin
