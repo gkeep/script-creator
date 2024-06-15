@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowPnuWVv.ui'
+## Form generated from reading UI file 'mainWindowvmMDgk.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.10
+## Created by: Qt User Interface Compiler version 5.15.14
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -25,6 +25,9 @@ class Ui_MainWindow(object):
         MainWindow.setSizePolicy(sizePolicy)
         MainWindow.setMinimumSize(QSize(750, 300))
         MainWindow.setMaximumSize(QSize(750, 302))
+        MainWindow.setLocale(QLocale(QLocale.Russian, QLocale.Russia))
+        MainWindow.setAnimated(True)
+        MainWindow.setDockNestingEnabled(True)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.verticalLayout_3 = QVBoxLayout(self.centralwidget)
@@ -196,7 +199,7 @@ class Ui_MainWindow(object):
         self.checkBox_repeat = QCheckBox(self.centralwidget)
         self.checkBox_repeat.setObjectName(u"checkBox_repeat")
         font = QFont()
-        font.setPointSize(12)
+        font.setPointSize(9)
         self.checkBox_repeat.setFont(font)
 
         self.ekd_repeat_layout.addWidget(self.checkBox_repeat)
