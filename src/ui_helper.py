@@ -3,8 +3,8 @@ import time
 from calendar import timegm
 
 import requests
-from PySide2 import QtWidgets
-from PySide2.QtWidgets import QDialog
+from PySide6 import QtWidgets
+from PySide6.QtWidgets import QDialog
 from markdown import markdown
 
 from ui.inputDialog import Ui_inDialog
