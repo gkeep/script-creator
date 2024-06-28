@@ -6,7 +6,7 @@ deps:
          qt6-base-dev qt6-wayland-dev qt6-wayland-dev-tools \
          libgtk-3-common libgtk-3-dev libgtk-4-common libgtk-4-dev libstdc++6
 	
-	python3 -m pip install -r script-creator/requirements.txt --break-system-packages
+	python3 -m pip install -r requirements.txt --break-system-packages
 
 build_linux:
 	pyinstaller --onefile src/main.py --name script_creator_$(version).bin
