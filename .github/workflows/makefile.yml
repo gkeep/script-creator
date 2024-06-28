@@ -16,3 +16,9 @@ jobs:
 
     - name: Run Linux build
       run: make build_linux
+
+    - name: Publish artifacts
+      uses: actions/upload-artifact@v4
+      with: 
+        name: script-creator-linux
+        path: script-creator-*.bin
