@@ -1,4 +1,4 @@
-version = 2024.4.2
+version = 2024.7.0
 
 deps:
 	sudo apt install -y python3 python3-pip python3-virtualenv \
