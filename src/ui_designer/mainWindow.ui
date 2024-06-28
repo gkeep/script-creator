@@ -297,11 +297,6 @@
          <layout class="QHBoxLayout" name="ekd_repeat_layout">
           <item>
            <widget class="QCheckBox" name="checkBox_repeat">
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
             <property name="text">
              <string>ekd_repeat_notification</string>
             </property>

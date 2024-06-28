@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'mainWindowvmMDgk.ui'
+## Form generated from reading UI file 'mainWindowEXeCXX.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.14
+## Created by: Qt User Interface Compiler version 5.15.13
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -198,9 +198,6 @@ class Ui_MainWindow(object):
         self.ekd_repeat_layout.setObjectName(u"ekd_repeat_layout")
         self.checkBox_repeat = QCheckBox(self.centralwidget)
         self.checkBox_repeat.setObjectName(u"checkBox_repeat")
-        font = QFont()
-        font.setPointSize(9)
-        self.checkBox_repeat.setFont(font)
 
         self.ekd_repeat_layout.addWidget(self.checkBox_repeat)
 
