@@ -11,6 +11,9 @@ deps:
 build_linux:
 	pyinstaller --onefile src/main.py --name script_creator_$(version).bin
 
+build_linux_cli:
+	pyinstaller --onefile src/constructor.py --name script_creator_cli.bin
+
 build_linux_docker: build_linux
 	mv dist/script_creator_$(version).bin /app/builds
 

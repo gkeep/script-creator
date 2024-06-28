@@ -2,7 +2,7 @@ name: Makefile CI
 
 on:
   push:
-    branches: [ "main", "ci" ]
+    branches: [ "main" ]
 
 jobs:
   build_linux:
@@ -16,9 +16,6 @@ jobs:
 
     - name: Run Linux build
       run: make build_linux
-
-    - name: ls dir
-      run: ls -lah
 
     - name: Publish artifacts
       uses: actions/upload-artifact@v4
