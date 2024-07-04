@@ -23,17 +23,11 @@ get_db() {
             ELSE (SELECT datname FROM pg_database WHERE datname ~ '_$db_name' LIMIT 1)
         END AS dn
     FROM pg_database
-    WHERE (datname ~ '_main' OR datname ~ '_$db_name') AND datname IS NOT NULL LIMIT 1;")
+    WHERE (datname ~ '_main' OR datname ~ '_$db_name') AND datname IS NOT NULL AND datallowconn IS true LIMIT 1;")
 
     echo "$result"
 }
     """
-
-    ekd_metadata_table = '\nekd_metadata="ekd_metadata"'
-    ekd_repeat_table = '\nekd_repeat_notification="ekd_repeat_notification_db"'
-    ekd_calendar_table = '\nekd_calendar="ekd_calendar_db"'
-    ekd_chat_table = '\nekd_chat="ekd_chat_db"'
-    ekd_showcase_db = 'ekd_showcase="ekd_showcase_db"'
 
     command = '\n$docker_pfx psql --dbname {}{} -c "{}"'
 
@@ -45,7 +39,7 @@ get_db() {
         """
         out = self.head
 
-        container_dbs = ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase")
+        container_dbs = ("ekd_metadata", "ekd_repeat_notification", "ekd_calendar", "ekd_chat", "ekd_showcase", "ekd_file_processing")
 
         for key, value in sql_scripts.items():
             body = value["body"].replace('$', '\\$').replace('"', '\\\"').replace(f"{key}.", '')
