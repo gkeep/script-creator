@@ -75,7 +75,8 @@ class UIMain(Ui_MainWindow):
         for key, val in new_data.items():
             self.data[key] = {
                 "body": val[0],
-                "outfile": val[1]
+                "outfile": val[1],
+                "separator": val[2]
             }
 
     def __open_output_dialog(self, data):
@@ -136,12 +137,13 @@ class InputDialog(Ui_inDialog):
     def toggle_output_to_file(self):
         if self.outputToFile.isChecked():
             self.outputFileName.setEnabled(True)
+            self.separatorSelector.setEnabled(True)
 
     def __save_data(self, db_name):
         outfile = self.outputFileName.text()
         if self.data != "":
             self.data = {
-                db_name: [self.textEdit.toPlainText(), outfile]
+                db_name: [self.textEdit.toPlainText(), outfile, self.separatorSelector.currentIndex()],
             }
 
         self.window.close()

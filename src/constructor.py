@@ -51,10 +51,18 @@ get_db() {
             if dbname == 'ekd_metadata_db':
                 dbname = 'ekd_metadata'
 
+            match value["separator"]:
+                case 0:
+                    sep = ','
+                case 1:
+                    sep = '\\t'
+                case 2:
+                    sep = '|'
+
             if value["outfile"] != "":
                 out += self.command.format(dbname, " -A -t",
                                            (f'SET search_path to public, {key};\n'
-                                            f'COPY({body.rstrip(";")}) TO STDOUT DELIMITER E\',\' CSV HEADER;'))
+                                            f'COPY({body.rstrip(";")}) TO STDOUT DELIMITER E\'{sep}\' CSV HEADER;'))
                 out += f' >> {value["outfile"]}'
             else:
                 out += self.command.format(dbname, "", f"SET search_path to public, {key};\n{body}")
