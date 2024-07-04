@@ -54,7 +54,7 @@ get_db() {
             if value["outfile"] != "":
                 out += self.command.format(dbname, " -A -t",
                                            (f'SET search_path to public, {key};\n'
-                                            f'COPY({body.rstrip(';')}) TO STDOUT DELIMITER E\',\' CSV HEADER;'))
+                                            f'COPY({body.rstrip(";")}) TO STDOUT DELIMITER E\',\' CSV HEADER;'))
                 out += f' >> {value["outfile"]}'
             else:
                 out += self.command.format(dbname, "", f"SET search_path to public, {key};\n{body}")

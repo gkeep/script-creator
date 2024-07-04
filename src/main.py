@@ -3,8 +3,6 @@ import sys
 from ui_helper import UIMain
 from PySide6.QtWidgets import QMainWindow, QApplication
 
-import constructor
-
 if __name__ == "__main__":
     app = QApplication(sys.argv)
     MainWindow = QMainWindow()
