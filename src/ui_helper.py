@@ -129,6 +129,8 @@ class InputDialog(Ui_inDialog):
             if data[db]["outfile"]:
                 self.outputToFile.setChecked(True)
                 self.outputFileName.setEnabled(True)
+                self.separatorSelector.setEnabled(True)
+                self.separatorSelector.setCurrentIndex(data[db]["separator"])
                 self.outputFileName.setText(data[db]["outfile"])
 
     def get_data(self) -> {}:
@@ -137,7 +139,6 @@ class InputDialog(Ui_inDialog):
     def toggle_output_to_file(self):
         if self.outputToFile.isChecked():
             self.outputFileName.setEnabled(True)
-            self.separatorSelector.setEnabled(True)
             self.separatorSelector.setEnabled(True)
 
     def __save_data(self, db_name):
